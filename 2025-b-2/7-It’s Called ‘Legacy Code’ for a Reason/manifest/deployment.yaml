@@ -1,0 +1,50 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cobol-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cobol-app
+  template:
+    metadata:
+      labels:
+        app: cobol-app
+    spec:
+      volumes:
+      - name: cobol-data
+        persistentVolumeClaim:
+          claimName: cobol-data-pvc
+
+      initContainers:
+      - name: setup-data
+        image: cobol-app:latest
+        imagePullPolicy: Never
+        command: ['sh', '-c', 'if [ ! -f /data/accounts.txt ]; then cp /workspace/accounts.txt /data/accounts.txt; fi']
+        volumeMounts:
+        - name: cobol-data
+          mountPath: /data
+
+      containers:
+      - name: webapp
+        image: cobol-app:latest
+        imagePullPolicy: Never
+        command: ["/bin/sh", "-c"]
+        args:
+          - ln -sf /data/accounts.txt /workspace/accounts.txt && uvicorn app:app --host 0.0.0.0 --port 8000
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: cobol-data
+          mountPath: /data
+
+      - name: interest
+        image: cobol-app:latest
+        imagePullPolicy: Never
+        workingDir: /data
+        command: ["/workspace/main", "--apply-interest"]
+        volumeMounts:
+        - name: cobol-data
+          mountPath: /data
