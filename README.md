@@ -1,4 +1,4 @@
-# Seleksi Lab Sister 2025 - Unified Repository
+# Sisterlab Selection 2025 - Unified Repository
 
 This repository is a consolidated collection of all projects and tasks submitted for the 2025 SEEI ITB Distributed Systems Laboratory assistant selection process.
 
