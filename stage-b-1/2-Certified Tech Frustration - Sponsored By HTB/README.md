@@ -1,5 +1,5 @@
 # Certified Tech Frustration - Sponsored By HTB
-Kumpulan *challenge* CTF pada seleksi Sister, beberapa soal dari HTB beberapa lagi original (asumsi).
+Kumpulan *challenge* CTF pada seleksi Sister, beberapa soal dari HTB beberapa lagi original.
 
 <br>
 
